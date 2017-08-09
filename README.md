@@ -114,7 +114,7 @@ npm run lint
 ````
 
 6. Setup git pre-push hook
-# Will lint you code and run unit tests every time you push to remote
+# Will lint and run unit tests on the branch before any push to remote
 ````bash
 grunt hooks
 ```` 
