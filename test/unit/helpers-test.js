@@ -17,15 +17,17 @@ describe('helpers', function() {
         assert.equal(tester[1], 'hi');
     });
 
-    it('log will not thow if console is cleared', function() {
-        var tmpConsole = window.console;
+    it('log will not throw if console is cleared', function() {
+        var tmpConsole = console.log;
 
-        window.console = null;
+        console.log = null;
+
         // this should not break
-        utils.log('testing');
+        expect(function() {
+            utils.log('testing');
+        }).to.not.throw();
 
-        // restore actual window console
-        window.console = tmpConsole;
+        console.log = tmpConsole;
     });
 });
 

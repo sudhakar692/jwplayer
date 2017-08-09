@@ -3,6 +3,7 @@ import instances from 'api/players';
 import Api from 'api/api';
 import _ from 'test/underscore';
 import $ from 'jquery';
+import sinon from 'sinon';
 import apiMembers from 'data/api-members';
 import apiMethods from 'data/api-methods';
 import apiMethodsChainable from 'data/api-methods-chainable';
@@ -58,27 +59,30 @@ describe('Api', function() {
         assert.equal(check, false, 'api.off works');
     });
 
-    it('bad events don\'t break player', function() {
-        jwplayer.debug = false;
+    it('bad events doesn\'t break player', function() {
+        var tmpConsole = console.log;
+
+        console.log = function() {};
 
         const api = createApi('player');
-        let check = false;
 
-        function update() {
-            check = true;
-        }
-
-        function bad() {
+        function validEvent() {
             throw new TypeError('blah');
         }
 
-        api.on('x', bad);
-        api.on('x', update);
-        api.on('x', bad);
+        function invalidEvent() {
+            throw new TypeError('blah');
+        }
 
-        api.trigger('x');
+        api.on('x', invalidEvent);
+        api.on('x', validEvent);
+        api.on('x', invalidEvent);
 
-        assert.isOk(check, 'When events blow up, handler continues');
+        expect(function() {
+            api.trigger('x');
+        }).to.not.throw();
+
+        console.log = tmpConsole;
     });
 
     it('throws exceptions when debug is true', function() {
@@ -86,15 +90,15 @@ describe('Api', function() {
 
         const api = createApi('player');
 
-        function bad() {
+        function invalidEvent() {
             throw new TypeError('blah');
         }
 
-        api.on('x', bad);
+        api.on('x', invalidEvent);
 
-        assert.throws(function() {
+        expect(function() {
             api.trigger('x');
-        }, TypeError, 'blah');
+        }).to.throw();
 
         jwplayer.debug = false;
     });
