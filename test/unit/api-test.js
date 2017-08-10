@@ -3,7 +3,6 @@ import instances from 'api/players';
 import Api from 'api/api';
 import _ from 'test/underscore';
 import $ from 'jquery';
-import sinon from 'sinon';
 import apiMembers from 'data/api-members';
 import apiMethods from 'data/api-methods';
 import apiMethodsChainable from 'data/api-methods-chainable';
