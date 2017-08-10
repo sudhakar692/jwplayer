@@ -88,8 +88,7 @@ module.exports = function(config) {
         files: [
             { pattern: 'test-context.js' },
             { pattern: 'test/files/*', included: false },
-            { pattern: 'node_modules/jquery/dist/jquery.js' },
-            { pattern: 'node_modules/sinon/pkg/sinon.js' }
+            { pattern: 'node_modules/jquery/dist/jquery.js' }
         ],
 
         // preprocess matching files before serving them to the browser

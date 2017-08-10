@@ -16,18 +16,5 @@ describe('helpers', function() {
         assert.equal(tester[0], 'hello');
         assert.equal(tester[1], 'hi');
     });
-
-    it('log will not throw if console is cleared', function() {
-        var tmpConsole = console.log;
-
-        console.log = null;
-
-        // this should not break
-        expect(function() {
-            utils.log('testing');
-        }).to.not.throw();
-
-        console.log = tmpConsole;
-    });
 });
 
